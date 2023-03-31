@@ -9,6 +9,8 @@ import sistemagn.servicos.Dtos.ServicoRequestDto;
 import sistemagn.servicos.entities.Servico;
 import sistemagn.servicos.service.ServicoService;
 
+import java.util.List;
+
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/servicos")
@@ -20,6 +22,11 @@ public class ServicoController {
     public ResponseEntity<Servico> save(@RequestParam(value = "cliente", defaultValue = "0") Long id
             , @RequestBody ServicoRequestDto servicoRequestDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(servicoService.save(id, servicoRequestDto));
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<List<ServicoDtoget>> findAl() {
+        return ResponseEntity.status(HttpStatus.OK).body(servicoService.findAll());
     }
 
     @GetMapping("/protocolo/{protocolo}")
@@ -43,5 +50,11 @@ public class ServicoController {
                                           @RequestParam(value = "cliente_id", defaultValue = "0") Long cliente_id,
                                           @RequestBody ServicoRequestDto servicoRequestDto) {
         return ResponseEntity.status(HttpStatus.OK).body(servicoService.update(servico_id, cliente_id, servicoRequestDto));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> delete(@PathVariable Long id) {
+        servicoService.delete(id);
+        return ResponseEntity.status(HttpStatus.OK).body("Serviço Deletado Com Sucesso!");
     }
 }

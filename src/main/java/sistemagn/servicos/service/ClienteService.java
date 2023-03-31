@@ -32,6 +32,15 @@ public class ClienteService {
                 .build());
     }
 
+    public List<ClienteGetDto> findAll() {
+
+        List<Cliente> clienteList = clienteRepository.findAll();
+
+        List<ClienteGetDto> clienteGetDtoList = clienteList.stream().map(cliente -> new ClienteGetDto(cliente)).collect(Collectors.toList());
+
+        return clienteGetDtoList;
+    }
+
     public Cliente findById(Long id) {
         Optional<Cliente> cliente = clienteRepository.findById(id);
 

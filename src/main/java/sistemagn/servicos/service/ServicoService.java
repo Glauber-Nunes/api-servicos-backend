@@ -3,6 +3,7 @@ package sistemagn.servicos.service;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sistemagn.servicos.Dtos.ClienteGetDto;
 import sistemagn.servicos.Dtos.ServicoDtoget;
 import sistemagn.servicos.Dtos.ServicoRequestDto;
 import sistemagn.servicos.Enums.Status;
@@ -14,7 +15,9 @@ import sistemagn.servicos.service.exceptions.NotFoundException;
 
 import java.security.SecureRandom;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ServicoService {
@@ -48,6 +51,15 @@ public class ServicoService {
         emailService.enviarEmailServicoAberto(cliente, servico); // envia email
 
         return servico;
+    }
+
+    public List<ServicoDtoget> findAll() {
+
+        List<Servico> servicoList = servicoRepository.findAll();
+
+        List<ServicoDtoget> servicoDtogetsList = servicoList.stream().map(servico -> new ServicoDtoget(servico)).collect(Collectors.toList());
+
+        return servicoDtogetsList;
     }
 
     public ServicoDtoget findByProtocolo(String protocolo) {
@@ -96,6 +108,11 @@ public class ServicoService {
                 .cliente(cliente != null ? cliente : servicoBanco.getCliente())
                 .build());
 
+    }
+
+    public void delete(Long id) {
+        Servico servico = this.findById(id);
+        servicoRepository.delete(servico);
     }
 
     private String gerarProtocolo() {

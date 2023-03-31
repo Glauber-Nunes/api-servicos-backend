@@ -25,6 +25,11 @@ public class ClienteController {
         return ResponseEntity.status(HttpStatus.CREATED).body(clienteService.save(newObj));
     }
 
+    @GetMapping("/")
+    public ResponseEntity<List<ClienteGetDto>> findAll(){
+        return ResponseEntity.status(HttpStatus.OK).body(clienteService.findAll());
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Cliente> findById(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(clienteService.findById(id));
