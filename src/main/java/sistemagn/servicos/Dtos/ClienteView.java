@@ -8,11 +8,11 @@ import sistemagn.servicos.entities.Cliente;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ClienteGetDto {
+public class ClienteView {
 
     private String nome;
     private String email;
-    public ClienteGetDto(Cliente cliente){
+    public ClienteView(Cliente cliente){
         this.nome= cliente.getNome();
         this.email= cliente.getEmail();
     }

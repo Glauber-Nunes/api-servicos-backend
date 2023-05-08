@@ -1,12 +1,24 @@
 package sistemagn.servicos.Enums;
 
-import lombok.Getter;
-
-import java.security.InvalidAlgorithmParameterException;
-
-@Getter
 public enum Status {
-    ABERTO,
-    FECHADO;
+    ABERTO(1),
+    FECHADO(2);
+    private int code;
 
+    private Status(int code) {
+    }
+
+    public int getCode() {
+        return this.code;
+    }
+
+    public int StatusCode(int code) {
+
+        for (Status value : Status.values()) {
+            if (code == value.getCode()) {
+                return code;
+            }
+        }
+        throw new IllegalArgumentException("STATUS INVALIDO");
+    }
 }

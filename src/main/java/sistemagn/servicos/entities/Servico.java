@@ -7,7 +7,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import sistemagn.servicos.Enums.Status;
-
 import java.util.Date;
 
 @Entity
@@ -16,6 +15,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 public class Servico {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -35,4 +35,17 @@ public class Servico {
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
+    @ManyToOne
+    @JoinColumn(name = "funcinario_id")
+    private Funcionario funcionario;
+    public Servico(Long id, Date dataInicio, Date dataAtualizacao, String descricaoServico, Double valorServico, String protocolo, Cliente cliente, Funcionario funcionario) {
+        this.id = id;
+        this.dataInicio = dataInicio;
+        this.dataAtualizacao = dataAtualizacao;
+        this.descricaoServico = descricaoServico;
+        this.valorServico = valorServico;
+        this.protocolo = protocolo;
+        this.cliente = cliente;
+        this.funcionario = funcionario;
+    }
 }

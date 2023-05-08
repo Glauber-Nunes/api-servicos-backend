@@ -8,7 +8,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.br.CPF;
-import sistemagn.servicos.entities.Cliente;
 import sistemagn.servicos.entities.Servico;
 
 import java.util.ArrayList;
@@ -18,7 +17,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ClienteRequestDto {
+public class ClienteForm {
     private Long id;
     @NotNull(message = "Campo Nome Requerido")
     @NotEmpty(message = "Informe O Nome Do Cliente")

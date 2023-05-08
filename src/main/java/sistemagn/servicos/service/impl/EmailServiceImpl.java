@@ -1,24 +1,23 @@
-package sistemagn.servicos.service;
+package sistemagn.servicos.service.impl;
 
 import freemarker.template.Configuration;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import sistemagn.servicos.entities.Cliente;
 import sistemagn.servicos.entities.Servico;
-import sistemagn.servicos.repository.ServicoRepository;
+import sistemagn.servicos.service.IEmailService;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class EmailService {
+public class EmailServiceImpl implements IEmailService {
     @Autowired
     private JavaMailSender javaMailSender;
     @Value("${spring.mail.username}")
@@ -26,6 +25,7 @@ public class EmailService {
     @Autowired
     private Configuration configuration;
 
+    @Override
     public void enviarEmailServicoAberto(Cliente cliente, Servico servico) {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
 
@@ -39,7 +39,7 @@ public class EmailService {
 
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
 
-            mimeMessageHelper.setSubject("Informaçoes Serviço");
+            mimeMessageHelper.setSubject("Informaçoes do seu serviço");
             mimeMessageHelper.setFrom(remetenteproperties);
             mimeMessageHelper.setTo(cliente.getEmail());
 
@@ -51,6 +51,7 @@ public class EmailService {
         }
     }
 
+    @Override
     public void enviarEmailServicoFinalizado(Servico servico) {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
 
@@ -64,7 +65,7 @@ public class EmailService {
 
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
 
-            mimeMessageHelper.setSubject("Serviço Finalizado");
+            mimeMessageHelper.setSubject("Serviço Finalizado Com Sucesso");
             mimeMessageHelper.setFrom(remetenteproperties);
             mimeMessageHelper.setTo(servico.getCliente().getEmail());
 

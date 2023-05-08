@@ -1,8 +1,0 @@
-DATABASE_URL=postgresql://postgres:FJEfZChZPuyoeHueW3Pi@containers-us-west-96.railway.app:7419/railway
-PGDATABASE=railway
-PGHOST=containers-us-west-96.railway.app
-PGPASSWORD=FJEfZChZPuyoeHueW3Pi
-PGPORT=7419
-PGUSER=postgres
-
-
