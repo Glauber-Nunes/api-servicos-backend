@@ -7,6 +7,7 @@ import sistemagn.servicos.Dtos.ClienteView;
 import sistemagn.servicos.Dtos.ClienteForm;
 import sistemagn.servicos.entities.Cliente;
 import sistemagn.servicos.repository.ClienteRepository;
+import sistemagn.servicos.repository.ServicoRepository;
 import sistemagn.servicos.service.IClienteService;
 import sistemagn.servicos.service.exceptions.NotFoundException;
 import sistemagn.servicos.service.exceptions.DataIntegrityViolationException;
@@ -19,6 +20,8 @@ import java.util.stream.Collectors;
 public class ClienteServiceImpl implements IClienteService {
     @Autowired
     private ClienteRepository clienteRepository;
+    @Autowired
+    private ServicoRepository servicoRepository;
 
     @Override
     @Transactional
@@ -53,22 +56,18 @@ public class ClienteServiceImpl implements IClienteService {
 
     @Override
     @Transactional
-    public Cliente update(Long id_cliente, ClienteForm newObj) {
+    public Cliente update(Long id_cliente, ClienteForm newClienteForm) {
 
         Cliente clienteBanco = this.findById(id_cliente);
+        this.findByExistsCPF(newClienteForm); // verifica se o cpj ja existe
 
-
-        Cliente cliente = Cliente.builder()
+        return clienteRepository.save(Cliente.builder()
                 .id(clienteBanco.getId())
-                .nome(newObj.getNome() != null ? newObj.getNome() : clienteBanco.getNome())
-                .cpf(newObj.getCpf() != null ? newObj.getCpf() : clienteBanco.getCpf())
-                .email(newObj.getEmail() != null ? newObj.getEmail() : clienteBanco.getEmail())
-                .servicoList(clienteBanco.getServicoList())
-                .build();
-
-        this.findByExistsCPF(newObj); // verifica se o cpj ja existe
-
-        return cliente;
+                .nome(newClienteForm.getNome() != null ? newClienteForm.getNome() : clienteBanco.getNome())
+                .cpf(newClienteForm.getCpf() != null ? newClienteForm.getCpf() : clienteBanco.getCpf())
+                .email(newClienteForm.getEmail() != null ? newClienteForm.getEmail() : clienteBanco.getEmail())
+                .servicoList(clienteBanco.getServicoList() != null ? newClienteForm.getServicoList() : clienteBanco.getServicoList())
+                .build());
     }
 
     @Override

@@ -38,7 +38,7 @@ public class ServicoServiceImpl implements IServicoService {
 
     @Transactional
     @Override
-    public Servico save(Long id_cliente, Long id_funcionario, ServicoForm newObj) {
+    public Servico save(Long id_cliente, Long id_funcionario, ServicoForm servicoForm) {
 
         Cliente cliente = iClienteService.findById(id_cliente);
         Funcionario funcionario = iFuncionarioService.findById(id_funcionario);
@@ -46,8 +46,8 @@ public class ServicoServiceImpl implements IServicoService {
         Servico servico = Servico.builder()
                 .id(null)
                 .dataInicio(new Date())
-                .descricaoServico(newObj.getDescricaoServico())
-                .valorServico(newObj.getValorServico())
+                .descricaoServico(servicoForm.getDescricaoServico())
+                .valorServico(servicoForm.getValorServico())
                 .protocolo(this.gerarProtocolo())
                 .status(Status.ABERTO)
                 .cliente(cliente)
@@ -104,7 +104,7 @@ public class ServicoServiceImpl implements IServicoService {
 
     @Override
     @Transactional
-    public Servico update(Long id_servico, Long id_cliente, ServicoForm newObj) {
+    public Servico update(Long id_servico, Long id_cliente, ServicoForm newServicoForm) {
 
         Servico servicoBanco = this.findById(id_servico);
 
@@ -113,9 +113,9 @@ public class ServicoServiceImpl implements IServicoService {
         return servicoRepository.save(Servico.builder()
                 .id(servicoBanco.getId())
                 .dataInicio(servicoBanco.getDataInicio())
-                .descricaoServico(newObj.getDescricaoServico() != null ? newObj.getDescricaoServico() : servicoBanco.getDescricaoServico())
+                .descricaoServico(newServicoForm.getDescricaoServico() != null ? newServicoForm.getDescricaoServico() : servicoBanco.getDescricaoServico())
                 .dataAtualizacao(new Date())
-                .valorServico(newObj.getValorServico() != null ? newObj.getValorServico() : servicoBanco.getValorServico())
+                .valorServico(newServicoForm.getValorServico() != null ? newServicoForm.getValorServico() : servicoBanco.getValorServico())
                 .protocolo(servicoBanco.getProtocolo())
                 .status(servicoBanco.getStatus())
                 .dataFechamento(servicoBanco.getDataFechamento())

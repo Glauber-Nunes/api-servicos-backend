@@ -9,7 +9,7 @@ import java.util.List;
 public interface IClienteService {
 
 
-    Cliente save(ClienteForm newObj);
+    Cliente save(ClienteForm clienteForm);
 
     List<ClienteView> findAll();
 

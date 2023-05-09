@@ -19,34 +19,31 @@ public class FuncionarioServiceImpl implements IFuncionarioService {
     @Override
     public Funcionario save(FuncionarioForm funcionarioForm) {
 
-        Funcionario funcionario = Funcionario.builder()
-                .id(null)
-                .nome(funcionarioForm.getNome())
-                .cpf(funcionarioForm.getCpf())
-                .cargo(funcionarioForm.getCargo())
-                .build();
-
-        funcionarioRepository.save(funcionario);
-
-        return funcionario;
+        return funcionarioRepository.save(
+                Funcionario.builder()
+                        .id(null)
+                        .nome(funcionarioForm.getNome())
+                        .cpf(funcionarioForm.getCpf())
+                        .cargo(funcionarioForm.getCargo())
+                        .build());
 
     }
+
     @Override
     @Transactional
     public Funcionario update(Long id, FuncionarioForm funcionarioForm) {
 
         Funcionario funcionarioBanco = this.findById(id);
 
-        Funcionario funcionario = Funcionario.builder()
+        return funcionarioRepository.saveAndFlush(Funcionario.builder()
                 .id(funcionarioBanco.getId())
                 .nome(funcionarioForm.getNome())
                 .cpf(funcionarioForm.getCpf())
                 .cargo(funcionarioForm.getCargo())
-                .build();
-
-        return funcionarioRepository.saveAndFlush(funcionario);
+                .build());
 
     }
+
     @Override
     public Funcionario findById(Long id) {
         Funcionario funcionario = funcionarioRepository.findById(id).get();

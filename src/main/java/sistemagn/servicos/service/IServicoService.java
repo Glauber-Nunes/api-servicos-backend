@@ -7,7 +7,7 @@ import sistemagn.servicos.entities.Servico;
 import java.util.List;
 
 public interface IServicoService {
-    Servico save(Long id_cliente, Long id_funcionario, ServicoForm newObj);
+    Servico save(Long id_cliente, Long id_funcionario, ServicoForm servicoForm);
 
     List<ServicoView> findAll();
 

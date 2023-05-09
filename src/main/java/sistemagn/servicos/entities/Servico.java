@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import sistemagn.servicos.Enums.Status;
+
 import java.util.Date;
 
 @Entity
@@ -38,6 +39,7 @@ public class Servico {
     @ManyToOne
     @JoinColumn(name = "funcinario_id")
     private Funcionario funcionario;
+
     public Servico(Long id, Date dataInicio, Date dataAtualizacao, String descricaoServico, Double valorServico, String protocolo, Cliente cliente, Funcionario funcionario) {
         this.id = id;
         this.dataInicio = dataInicio;
